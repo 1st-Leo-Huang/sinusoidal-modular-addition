@@ -10,14 +10,18 @@ See `env.yml` for base dependencies. Add your W&B API key and entity name to `ml
 ## Quickstart 
 
 ### Single-length demo
+```bash
 python mlp.py --project "Underparam-demo" --m 3 --p 97 --d 256 --train_size 8000 \
   --seed 1337 --batch_size 1024 --activation sin --learning_rate 1e-3 \
   --weight_decay 0.0 --init_std 0.01 --optimizer muon --epochs 300000
+```
 
 ### OOD length-generalization demo
+```bash
 python ood.py --project "OOD-demo" \
   --train_m 2 3 4 5 7 13 19 \
   --test_m 3 7 13 14 38 53 97 201 303 401 512 602 705 811 \
   --p 97 --d 1024 --train_size 8000 --seed 1337 --batch_size 1024 \
   --activation sin --learning_rate 1e-3 --weight_decay 0.0 \
   --init_std 0.01 --optimizer muon --epochs 300000
+```
