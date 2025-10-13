@@ -5,7 +5,7 @@ Minimal, reproducible code for the paper "Provable Benefits of Sinusoidal Activa
 Implementation of modular addition with **sinusoidal** and **ReLU** activations.  
 Includes single length training for both underparameterized and overparameterized regimes (`mlp.py`) and length generalization for out-of-domain regime (`ood.py`), plus SLURM launchers for sweeps (`mlp.sh`, `ood.sh`).
 
-See `env.yml` for base dependencies. Add your W&B API key and entity name to `mlp.py` and `ood.py` to enable metric logging.
+See `environment.yml` for base dependencies. Add your W&B API key and entity name to `mlp.py` and `ood.py` to enable metric logging.
 
 ## Quickstart 
 
