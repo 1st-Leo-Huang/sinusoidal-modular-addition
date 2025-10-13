@@ -1,8 +1,22 @@
+# OS
+.DS_Store
+
+# Python bytecode
 __pycache__/
-*.pyc
+*.py[cod]
+
+# Virtual envs & local configs
 .venv/
+venv/
 .env
+.env.*
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Training artifacts
 runs/
 checkpoints/
 *.pth
-.DS_Store
+*.pt
+*.ckpt
