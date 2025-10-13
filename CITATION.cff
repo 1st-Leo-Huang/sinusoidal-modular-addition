@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+title: "Provable Benefits of Sinusoidal Activation for Modular Addition – Code"
+message: "If you use this code, please cite it as below."
+authors:
+  - family-names: Huang
+    given-names: Leo
+repository-code: https://github.com/1st-Leo-Huang/sinusoidal-modular-addition
+preferred-citation:
+  type: article
+  title: "Provable Benefits of Sinusoidal Activation for Modular Addition"
+  authors:
+    - family-names: Huang
+      given-names: Leo
+  year: 2025
