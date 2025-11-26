@@ -158,17 +158,30 @@ def main(args):
                 dict(params=[model.V, model.W], use_muon=True, lr=cfg.learning_rate, weight_decay=cfg.weight_decay),
             ]
         optimizer = SingleDeviceMuonWithAuxAdam(param_groups)
-    else:
-        if v_only:
-            param_groups = [
-                dict(params=[model.V], lr=cfg.learning_rate, weight_decay=cfg.weight_decay),
-                dict(params=[model.W], lr=cfg.learning_rate, weight_decay=0.0),
+    elif cfg.optimizer == 'adamw':  
+        if v_only:  
+            param_groups = [ 
+                dict(params=[model.V], lr=cfg.learning_rate, weight_decay=cfg.weight_decay), 
+                dict(params=[model.W], lr=cfg.learning_rate, weight_decay=0.0),  
+            ]  
+        else: 
+            param_groups = [ 
+                dict(params=[model.V, model.W], lr=cfg.learning_rate, weight_decay=cfg.weight_decay), 
             ]
-        else:
-            param_groups = [
-                dict(params=[model.V, model.W], lr=cfg.learning_rate, weight_decay=cfg.weight_decay),
-            ]
-        optimizer = torch.optim.AdamW(param_groups)
+        optimizer = torch.optim.AdamW(param_groups)  
+    elif cfg.optimizer == 'sgd': 
+        if v_only:  
+            param_groups = [  
+                dict(params=[model.V], lr=cfg.learning_rate, weight_decay=cfg.weight_decay),  
+                dict(params=[model.W], lr=cfg.learning_rate, weight_decay=0.0),  
+            ]  
+        else:  
+            param_groups = [  
+                dict(params=[model.V, model.W], lr=cfg.learning_rate, weight_decay=cfg.weight_decay),  
+            ]  
+        optimizer = torch.optim.SGD(param_groups)  
+    else:  
+        raise ValueError(f"Unknown optimizer: {cfg.optimizer}")  
     # ------------------------------------------------------------------
 
     for epoch in range(cfg.epochs):
@@ -289,7 +302,7 @@ if __name__ == "__main__":
     parser.add_argument('--epochs', type=int, default=100)
 
     # Optimizer parameters
-    parser.add_argument('--optimizer', choices=['muon', 'adamw'], default='muon')
+    parser.add_argument('--optimizer', choices=['muon', 'adamw', 'sgd'], default='muon')  
     parser.add_argument('--learning_rate', type=float, default=None)
     parser.add_argument('--weight_decay', type=float, default=0.1)
     parser.add_argument('--gradient_clipping', type=float, default=-1.0)
@@ -312,8 +325,15 @@ if __name__ == "__main__":
     if args.train_size is None:
         args.train_size = 4 * args.p * args.d
 
-    if args.learning_rate is None:
-        args.learning_rate = 0.01 if args.optimizer == 'muon' else 0.001
+    if args.learning_rate is None:  
+        if args.optimizer == 'muon':  
+            args.learning_rate = 0.01  
+        elif args.optimizer == 'adamw':  
+            args.learning_rate = 0.001  
+        elif args.optimizer == 'sgd':  
+            args.learning_rate = 0.1 
+        else:  
+            args.learning_rate = 0.001  
 
     # Normalize/unique-ify test_m for consistency
     args.test_m = sorted(set(int(m) for m in args.test_m))
