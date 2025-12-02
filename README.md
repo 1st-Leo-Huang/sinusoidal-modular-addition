@@ -35,7 +35,7 @@ python ood.py --project "OOD-demo" \
 
 ### Transformers demo
 ```bash
-python /home-nfs/leo/project/Grokking/Final/transformers.py \
+python transformers.py \
     --m 3 --p 97 d 256 \
     --optimizer "$optimizer" --activation "$activation" --lr 1e-4 \
     --seed "$seed" --weight_decay "$weight_decay" --batch_size 1024 \
